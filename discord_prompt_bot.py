@@ -1,6 +1,9 @@
 import discord
 import random
 import os
+from flask import Flask
+
+app = Flask(__name__)
 
 # Create a list of writing prompts
 writing_prompts = [
@@ -20,6 +23,10 @@ intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
 
+@app.route('/')
+def home():
+    return "Discord bot is running!"
+
 @client.event
 async def on_ready():
     print(f'We have logged in as {client.user}')
@@ -37,6 +44,22 @@ async def on_message(message):
         # Send the writing prompt as a response
         await message.channel.send(prompt)
 
-# Get the bot token from the environment variable
-token = os.getenv('DISCORD_BOT_TOKEN')
-client.run(token)
+if __name__ == "__main__":
+    # Run the web server in a separate thread
+    from threading import Thread
+    import sys
+
+    if 'serve' in sys.argv:
+        # Get the bot token from the environment variable
+        token = os.getenv('DISCORD_BOT_TOKEN')
+
+        # Start the bot in a new thread
+        bot_thread = Thread(target=client.run, args=(token,))
+        bot_thread.start()
+
+        # Start the Flask server
+        app.run(host='0.0.0.0', port=8000)
+    else:
+        # Only run the bot
+        token = os.getenv('DISCORD_BOT_TOKEN')
+        client.run(token)
