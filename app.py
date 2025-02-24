@@ -10,7 +10,11 @@ DISCORD_PUBLIC_KEY = os.environ["DISCORD_PUBLIC_KEY"]
 app.config["DISCORD_CLIENT_SECRET"] = os.environ["DISCORD_CLIENT_SECRET"]
 app.config["DISCORD_BOT_TOKEN"] = os.environ["DISCORD_BOT_TOKEN"]
 
-@app.route("/", methods=["POST"])
+@app.route("/", methods=["GET"])
+def home():
+    return 'Discord Bot is running!'
+
+@app.route("/interactions", methods=["POST"])
 async def interactions():
     print(f"👉 Request: {request.json}")
     raw_request = request.json
