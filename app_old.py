@@ -71,3 +71,38 @@ if __name__ == "__main__":
         # Only run the bot
         token = os.getenv('DISCORD_BOT_TOKEN')
         client.run(token)
+
+
+def verify_discord_request(req):
+    signature = req.headers.get('X-Signature-Ed25519')
+    timestamp = req.headers.get('X-Signature-Timestamp')
+    body = req.data.decode('utf-8')
+
+    if not signature or not timestamp:
+        return False
+
+    try:
+        # Combine timestamp and body to create the message
+        message = timestamp + body
+        message_bytes = message.encode('utf-8')
+
+        # Decode the public key and signature
+        public_key_bytes = bytes.fromhex(DISCORD_PUBLIC_KEY)
+        signature_bytes = bytes.fromhex(signature)
+
+        # Verify the signature
+        verify_key = nacl.signing.VerifyKey(public_key_bytes)
+        verify_key.verify(message_bytes, signature_bytes)
+        return True
+    except Exception as e:
+        print(f"Verification failed: {e}")
+        return False
+
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    if not verify_discord_request(request):
+        return jsonify({"error": "Invalid request signature"}), 401
+
+    # Handle the request as it is verified
+    data = request.json
+    return jsonify({"message": "Request verified", "data": data}), 200
