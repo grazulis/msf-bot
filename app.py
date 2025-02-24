@@ -42,6 +42,7 @@ async def on_message(message):
     if 'prompt' in message.content.lower():
         # Select a random writing prompt
         prompt = random.choice(writing_prompts)
+        print(f'Sending writing prompt: {prompt}')
         # Send the writing prompt as a response
         await message.channel.send(prompt)
 
@@ -60,6 +61,7 @@ if __name__ == "__main__":
 
         # Start the Flask server
         app.run(host='0.0.0.0', port=8000)
+        print('Flask server running...')
     else:
         # Only run the bot
         token = os.getenv('DISCORD_BOT_TOKEN')
