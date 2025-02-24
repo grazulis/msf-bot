@@ -14,7 +14,8 @@ app.config["DISCORD_BOT_TOKEN"] = os.environ["DISCORD_BOT_TOKEN"]
 def home():
     return 'Discord Bot is running!'
 
-@app.route("/interactions", methods=["POST"])
+#@app.route("/interactions", methods=["POST"])
+@app.route("/interactions", methods=["GET"])
 async def interactions():
     print(f"👉 Request: {request.json}")
     raw_request = request.json
