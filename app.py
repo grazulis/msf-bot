@@ -3,7 +3,8 @@ import discord
 import hmac
 import hashlib
 from flask import Flask, jsonify, request
-# from flask_discord_interactions import DiscordInteractions
+from discord_interactions import verify_key_decorator
+
 
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ async def interactions():
     raw_request = request.json
     return interact(raw_request)
 
-# @verify_key_decorator(DISCORD_PUBLIC_KEY)
+@verify_key_decorator(DISCORD_PUBLIC_KEY)
 def interact(raw_request):
     if raw_request["type"] == 1:  # PING
         response_data = {"type": 1}  # PONG
