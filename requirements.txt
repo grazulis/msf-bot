@@ -1,4 +1,4 @@
 discord
+discord-interactions
 flask==3.0.0
-flask_discord_interactions
 gunicorn

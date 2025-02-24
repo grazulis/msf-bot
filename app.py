@@ -1,28 +1,41 @@
 import os
-
-from flask import Flask
-from flask_discord_interactions import DiscordInteractions
+import discord
+from flask import Flask, jsonify, request
+# from flask_discord_interactions import DiscordInteractions
 
 app = Flask(__name__)
-discord = DiscordInteractions(app)
 
 app.config["DISCORD_CLIENT_ID"] = os.environ["DISCORD_CLIENT_ID"]
-app.config["DISCORD_PUBLIC_KEY"] = os.environ["DISCORD_PUBLIC_KEY"]
+DISCORD_PUBLIC_KEY = os.environ["DISCORD_PUBLIC_KEY"]
 app.config["DISCORD_CLIENT_SECRET"] = os.environ["DISCORD_CLIENT_SECRET"]
+app.config["DISCORD_BOT_TOKEN"] = os.environ["DISCORD_BOT_TOKEN"]
 
-@app.route('/')
-def index():
-    # Returns message to check bot is running
-    return 'Discord Bot is running!'
+@app.route("/", methods=["POST"])
+async def interactions():
+    print(f"👉 Request: {request.json}")
+    raw_request = request.json
+    return interact(raw_request)
 
-@discord.command()
-def ping(ctx):
-    "Respond with a friendly 'pong'!"
-    return "Pong!"
+# @verify_key_decorator(DISCORD_PUBLIC_KEY)
+def interact(raw_request):
+    if raw_request["type"] == 1:  # PING
+        response_data = {"type": 1}  # PONG
+    else:
+        data = raw_request["data"]
+        command_name = data["name"]
 
-discord.set_route("/interactions")
+        if command_name == "hello":
+            message_content = "Hello there!"
+        elif command_name == "echo":
+            original_message = data["options"][0]["value"]
+            message_content = f"Echoing: {original_message}"
 
-discord.update_commands(guild_id=os.environ["TESTING_GUILD"])
+        response_data = {
+            "type": 4,
+            "data": {"content": message_content},
+        }
 
-if __name__ == '__main__':
-    app.run()
+    return jsonify(response_data)
+
+if __name__ == "__main__":
+    app.run(debug=True)
