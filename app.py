@@ -10,7 +10,7 @@ from discord_interactions import verify_key_decorator
 app = Flask(__name__)
 
 app.config["DISCORD_CLIENT_ID"] = os.environ["DISCORD_CLIENT_ID"]
-app.config["DISCORD_PUBLIC_KEY"] = os.environ["DISCORD_PUBLIC_KEY"]
+DISCORD_PUBLIC_KEY = os.environ["DISCORD_PUBLIC_KEY"]
 app.config["DISCORD_CLIENT_SECRET"] = os.environ["DISCORD_CLIENT_SECRET"]
 app.config["DISCORD_BOT_TOKEN"] = os.environ["DISCORD_BOT_TOKEN"]
 
