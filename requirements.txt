@@ -1,5 +1,4 @@
 discord
 flask==3.0.0
 gunicorn
-PyNaCl
 discord-interactions
