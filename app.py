@@ -56,7 +56,14 @@ writing_prompts = [
     "You discover a hidden talent that makes you famous overnight.",
     "You are kidnapped by pirates and must find a way to escape.",
     "You find an ancient tree that grants you wisdom and knowledge.",
-    "A famous celebrity asks for your help to solve a mystery."
+    "A famous celebrity asks for your help to solve a mystery.",
+    "Digging in your garden you find a mysterious portal.",
+    "Everyone in the world has forgotten the colour red apart from one person.",
+    "There is a mysterious creature living the local canal.",
+    "An attack drone becomes self-aware and chooses a new philosophy of pacifism.",
+    "Following the strange smell you uncover the spaceship under the floorboards.",
+    "A knight falls from his horse.",
+    "You meet a god in the pub."
 ]
 
 @app.route("/", methods=["GET"])
