@@ -125,7 +125,17 @@ def interact(raw_request):
         command_name = data["name"]
 
         if command_name == "hello":
-            message_content = "Hello there!"
+            message_content = """# Welcome
+
+Good to have you with us! Please check out <#885125907721895936> and <#885126372832456724> to get started.
+
+Once you've introduced yourself, you'll get the **Joiner **role and gain access to more of the server, including <#1171907103653376030>  where we submit extracts for critique. You'll need to attend __at least one workshop session__ before you become a **Workshopper** and can submit your own.
+
+📌 Use the pin icon at the top of channels to find useful info.  
+
+🗓️ Events can be found by using the calendar icon at the top.
+
+Any questions, ask away in <#558940222780342284>."""
         elif command_name == "echo":
             original_message = data["options"][0]["value"]
             message_content = f"Echoing: {original_message}"
