@@ -13,4 +13,4 @@ This bot has three commands:
 
 `/echo` sends back whatever text the user adds and is just for test purposes. 
 
-This code is based heavily on https://github.com/pixegami/discord-bot-lambda but has been adapted for Azure.
+If you want to use this code feel free, but be aware that it does not include the code for registration of the commands on Discord. The botis based heavily on https://github.com/pixegami/discord-bot-lambda but has been adapted for Azure, and you can find code for registering the commands there.
